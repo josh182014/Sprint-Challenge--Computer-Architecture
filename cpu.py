@@ -29,6 +29,7 @@ class CPU:
         self.pc = 0
         self.isRunning = True
         self.reg[SP] = 0xf4
+        self.FL = 0b00000000
 
         self.commands = {
             HLT: self.HLTMethod,
@@ -154,13 +155,20 @@ class CPU:
         self.alu("ADD", a, b)
 
     def COMPMethod(self, a, b):
-        print('compmethod', a, b)
+        if self.reg[a] == self.reg[b]:
+            self.FL = 0b00000001
 
     def JUMPMethod(self, a, b):
-        print('jumpmethod', a, b)
+        self.pc = self.reg[a]
 
     def JEQMethod(self, a, b):
-        print('jeqmethod', a, b)
+        if self.FL == 0b00000001:
+            self.JUMPMethod(a, b)
+        else:
+            self.pc += 2
 
     def JNEMethod(self, a, b):
-        print('jnemethod', a, b)
+        if self.FL != 0b00000001:
+            self.JUMPMethod(a, b)
+        else:
+            self.pc += 2
