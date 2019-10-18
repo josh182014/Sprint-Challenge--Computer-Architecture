@@ -39,7 +39,11 @@ class CPU:
             POP: self.POPMethod,
             CALL: self.CALLMethod,
             RET: self.RETMethod,
-            ADD: self.ADDMethod
+            ADD: self.ADDMethod,
+            JMP: self.JUMPMethod,
+            CMP: self.COMPMethod,
+            JEQ: self.JEQMethod,
+            JNE: self.JNEMethod
         }
 
     def ram_read(self, MAR):
@@ -148,3 +152,15 @@ class CPU:
 
     def ADDMethod(self, a, b):
         self.alu("ADD", a, b)
+
+    def COMPMethod(self, a, b):
+        print('compmethod', a, b)
+
+    def JUMPMethod(self, a, b):
+        print('jumpmethod', a, b)
+
+    def JEQMethod(self, a, b):
+        print('jeqmethod', a, b)
+
+    def JNEMethod(self, a, b):
+        print('jnemethod', a, b)
